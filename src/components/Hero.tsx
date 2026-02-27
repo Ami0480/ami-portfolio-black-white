@@ -38,6 +38,9 @@ export function Hero() {
     ["ellipse(100% 100% at 50% 50%)", "ellipse(0% 0% at 50% 50%)"],
   );
 
+  const yAmi = useTransform(scrollYProgress, [0.25, 1], [0, -300]);
+  const ySubtitle = useTransform(scrollYProgress, [0.25, 1], [0, -400]);
+
   useMotionValueEvent(clipPathProgress, "change", (latest) => {
     if (latest === "ellipse(0% 0% at 50% 50%)") {
       clipPath.set("ellipse(0% 0% at 50% 50%)");
@@ -53,26 +56,41 @@ export function Hero() {
     return () => lenis.destroy();
   }, []);
 
+  const handleScrollTo = (id: string) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   return (
     <>
       {/* Top navigation with smart black/white flip */}
       <nav className="fixed inset-x-0 top-8 z-50 flex justify-center mix-blend-difference">
-        <ul
-          className="flex gap-6 text-sm md:text-base text-white"
-          style={{ fontFamily: "var(--font-unica)" }}
-        >
+        <ul className="flex gap-6 text-xs md:text-sm text-white">
           <li>
-            <button type="button" className="uppercase tracking-wide">
+            <button
+              type="button"
+              onClick={() => handleScrollTo("about")}
+              className="tracking-wide"
+            >
               about
             </button>
           </li>
           <li>
-            <button type="button" className="uppercase tracking-wide">
+            <button
+              type="button"
+              onClick={() => handleScrollTo("work")}
+              className="tracking-wide"
+            >
               work
             </button>
           </li>
           <li>
-            <button type="button" className="uppercase tracking-wide">
+            <button
+              type="button"
+              onClick={() => handleScrollTo("contact")}
+              className="tracking-wide"
+            >
               contact
             </button>
           </li>
@@ -81,14 +99,14 @@ export function Hero() {
 
       <section className="relative h-[300vh] bg-white">
         <div className="sticky top-0 flex h-screen w-full items-center justify-center overflow-hidden bg-white">
-          <div className="pointer-events-none z-0 flex h-full w-full items-center justify-center">
-            <span
-              className="select-none text-[clamp(6rem,20vw,14rem)] font-normal leading-none text-black"
-              style={{ fontFamily: "var(--font-unica)" }}
-            >
+          <motion.div
+            className="pointer-events-none z-0 flex h-full w-full items-center justify-center"
+            style={{ y: yAmi }}
+          >
+            <span className="font-unica select-none text-[clamp(6rem,20vw,14rem)] font-normal leading-none text-black">
               ami
             </span>
-          </div>
+          </motion.div>
 
           <motion.div
             className="pointer-events-none absolute inset-0 z-10 bg-black"
@@ -96,8 +114,8 @@ export function Hero() {
           />
 
           <motion.span
-            className="absolute bottom-[15vh] z-20 flex text-2xl text-black md:text-3xl"
-            style={{ fontFamily: "var(--font-sacramento)" }}
+            className="font-sacramento absolute bottom-[15vh] z-20 flex text-2xl text-black md:text-3xl"
+            style={{ y: ySubtitle }}
             variants={subtitleContainer}
             initial="hidden"
             animate={typingStarted ? "visible" : "hidden"}

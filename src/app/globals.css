@@ -1,3 +1,18 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+
+@utility font-unica {
+  font-family: var(--font-unica), sans-serif;
+}
+
+@utility font-sacramento {
+  font-family: var(--font-sacramento), cursive;
+}
+body {
+  font-family: var(--font-unica), sans-serif;
+}
+
+button {
+  font-family: var(--font-unica), sans-serif;
+}
