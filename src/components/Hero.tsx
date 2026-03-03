@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Lenis from "lenis";
 import {
   motion,
-  useScroll, // 👈 add this
+  useScroll,
   useMotionValue,
   useMotionValueEvent,
   useTransform,
@@ -28,25 +28,30 @@ const subtitleLetter = {
 export function Hero() {
   const [typingStarted, setTypingStarted] = useState(false);
 
-  const { scrollYProgress } = useScroll(); // 👈 add this
+  const { scrollYProgress } = useScroll();
 
   const clipPath = useMotionValue("ellipse(100% 100% at 50% 50%)");
 
   const clipPathProgress = useTransform(
     scrollYProgress,
-    [0, 0.25],
+    [0, 0.15],
     ["ellipse(100% 100% at 50% 50%)", "ellipse(0% 0% at 50% 50%)"],
   );
 
-  const yAmi = useTransform(scrollYProgress, [0.25, 1], [0, -300]);
-  const ySubtitle = useTransform(scrollYProgress, [0.25, 1], [0, -400]);
+  const yAmi = useTransform(scrollYProgress, [0.15, 1], [0, -150]);
+  const ySubtitle = useTransform(scrollYProgress, [0.15, 1], [0, -400]); // faster
 
-  useMotionValueEvent(clipPathProgress, "change", (latest) => {
-    if (latest === "ellipse(0% 0% at 50% 50%)") {
+  useMotionValueEvent(scrollYProgress, "change", (value) => {
+    // Fast oval reveal, then lock open
+    if (value >= 0.15) {
       clipPath.set("ellipse(0% 0% at 50% 50%)");
-      setTypingStarted(true); // 👈 add this
     } else {
-      clipPath.set(latest);
+      clipPath.set(clipPathProgress.get());
+    }
+
+    // Start typing slightly after the reveal has completed
+    if (value >= 0.18) {
+      setTypingStarted(true);
     }
   });
 
@@ -97,7 +102,7 @@ export function Hero() {
         </ul>
       </nav>
 
-      <section className="relative h-[300vh] bg-white">
+      <section className="relative h-[400vh] bg-white">
         <div className="sticky top-0 flex h-screen w-full items-center justify-center overflow-hidden bg-white">
           <motion.div
             className="pointer-events-none z-0 flex h-full w-full items-center justify-center"
