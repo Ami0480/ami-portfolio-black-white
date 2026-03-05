@@ -60,7 +60,7 @@ export function Hero() {
     const isScrollingDown = value > prevScrollRef.current;
     prevScrollRef.current = value;
 
-    if (value >= 0.2 && isScrollingDown) {
+    if (value >= 0.1 && isScrollingDown) {
       if (!typingStartedRef.current) {
         typingStartedRef.current = true;
         setTypingStarted(true);
@@ -144,7 +144,7 @@ export function Hero() {
         </ul>
       </nav>
 
-      <section className="relative h-[400vh] bg-white">
+      <section className="relative h-[300vh] bg-white">
         <div
           ref={sectionRef}
           className="sticky top-0 flex h-screen w-full items-center justify-center overflow-hidden bg-white"

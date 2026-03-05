@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import Image from "next/image";
 
 export function AboutSection() {
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -20,9 +21,28 @@ export function AboutSection() {
       id="about"
       className="min-h-[120vh] bg-white text-black flex flex-col justify-center"
     >
-      <div className="flex h-full items-end justify-end">
+      <div className="flex h-full items-stretch px-6 md:px-12 py-16 gap-8">
+        {/* Left — image, same height as the right content */}
         <motion.div
-          className="flex w-full flex-col gap-12 px-6 py-16 sm:w-1/2 md:px-12 items-end"
+          className="hidden sm:flex w-1/2 items-center"
+          initial={{ opacity: 0, x: -24 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
+          <Image
+            src="/images/portfolio-blackandwhite.png"
+            alt="About"
+            width={600}
+            height={400}
+            className="w-full object-contain max-h-[400px]"
+            style={{ height: "100%" }}
+          />
+        </motion.div>
+
+        {/* Right — title and paragraph */}
+        <motion.div
+          className="flex w-full flex-col gap-12 sm:w-1/2 items-end justify-center"
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.4 }}
