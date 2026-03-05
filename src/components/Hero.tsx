@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Lenis from "lenis";
 import {
   motion,
@@ -8,6 +8,7 @@ import {
   useMotionValue,
   useMotionValueEvent,
   useTransform,
+  useSpring,
 } from "framer-motion";
 
 const subtitleText = "Frontend Developer";
@@ -27,31 +28,57 @@ const subtitleLetter = {
 
 export function Hero() {
   const [typingStarted, setTypingStarted] = useState(false);
+  const [revealed, setRevealed] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const isHoveringRef = useRef(false);
+  const revealCenterRef = useRef({ x: -1, y: -1 });
+  const typingStartedRef = useRef(false);
+  const prevScrollRef = useRef(0);
+
+  const cursorX = useMotionValue(-999);
+  const cursorY = useMotionValue(-999);
+  const springX = useSpring(cursorX, { stiffness: 150, damping: 20 });
+  const springY = useSpring(cursorY, { stiffness: 150, damping: 20 });
+  const maskValue = useMotionValue("none");
 
   const { scrollYProgress } = useScroll();
+  const scrollRadius = useTransform(scrollYProgress, [0, 0.2], [40, 3000]);
 
-  const clipPath = useMotionValue("ellipse(100% 100% at 50% 50%)");
+  const updateCursorMask = () => {
+    if (!isHoveringRef.current || scrollYProgress.get() > 0) return;
+    maskValue.set(
+      `radial-gradient(circle 20px at ${springX.get()}px ${springY.get()}px, transparent 100%, black 100%)`,
+    );
+  };
 
-  const clipPathProgress = useTransform(
-    scrollYProgress,
-    [0, 0.15],
-    ["ellipse(100% 100% at 50% 50%)", "ellipse(0% 0% at 50% 50%)"],
-  );
-
-  const yAmi = useTransform(scrollYProgress, [0.15, 1], [0, -150]);
-  const ySubtitle = useTransform(scrollYProgress, [0.15, 1], [0, -400]); // faster
+  useMotionValueEvent(springX, "change", updateCursorMask);
+  useMotionValueEvent(springY, "change", updateCursorMask);
 
   useMotionValueEvent(scrollYProgress, "change", (value) => {
-    // Fast oval reveal, then lock open
-    if (value >= 0.15) {
-      clipPath.set("ellipse(0% 0% at 50% 50%)");
-    } else {
-      clipPath.set(clipPathProgress.get());
+    const isScrollingDown = value > prevScrollRef.current;
+    prevScrollRef.current = value;
+
+    if (value > 0 && revealCenterRef.current.x === -1) {
+      revealCenterRef.current = {
+        x: springX.get() === -999 ? window.innerWidth / 2 : springX.get(),
+        y: springY.get() === -999 ? window.innerHeight / 2 : springY.get(),
+      };
     }
 
-    // Start typing slightly after the reveal has completed
-    if (value >= 0.18) {
-      setTypingStarted(true);
+    if (value >= 0.2 && isScrollingDown) {
+      setRevealed(true);
+      if (!typingStartedRef.current) {
+        typingStartedRef.current = true;
+        setTypingStarted(true);
+      }
+    }
+
+    if (value > 0 && value < 0.2) {
+      const { x, y } = revealCenterRef.current;
+      const r = scrollRadius.get();
+      maskValue.set(
+        `radial-gradient(circle ${r}px at ${x}px ${y}px, transparent 100%, black 100%)`,
+      );
     }
   });
 
@@ -61,15 +88,35 @@ export function Hero() {
     return () => lenis.destroy();
   }, []);
 
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = sectionRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    cursorX.set(e.clientX - rect.left);
+    cursorY.set(e.clientY - rect.top);
+  };
+
+  const handleMouseEnter = () => {
+    isHoveringRef.current = true;
+  };
+
+  const handleMouseLeave = () => {
+    isHoveringRef.current = false;
+    if (scrollYProgress.get() === 0) {
+      maskValue.set("none");
+    }
+  };
+
   const handleScrollTo = (id: string) => {
     const el = document.getElementById(id);
     if (!el) return;
     el.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
+  const yAmi = useTransform(scrollYProgress, [0.2, 1], [0, -150]);
+  const ySubtitle = useTransform(scrollYProgress, [0.2, 1], [0, -400]);
+
   return (
     <>
-      {/* Top navigation with smart black/white flip */}
       <nav className="fixed inset-x-0 top-8 z-50 flex justify-center mix-blend-difference">
         <ul className="flex gap-6 text-xs md:text-sm text-white">
           <li>
@@ -103,7 +150,13 @@ export function Hero() {
       </nav>
 
       <section className="relative h-[400vh] bg-white">
-        <div className="sticky top-0 flex h-screen w-full items-center justify-center overflow-hidden bg-white">
+        <div
+          ref={sectionRef}
+          className="sticky top-0 flex h-screen w-full items-center justify-center overflow-hidden bg-white"
+          onMouseMove={handleMouseMove}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
           <motion.div
             className="pointer-events-none z-0 flex h-full w-full items-center justify-center"
             style={{ y: yAmi }}
@@ -113,10 +166,15 @@ export function Hero() {
             </span>
           </motion.div>
 
-          <motion.div
-            className="pointer-events-none absolute inset-0 z-10 bg-black"
-            style={{ clipPath }}
-          />
+          {!revealed && (
+            <motion.div
+              className="pointer-events-none absolute inset-0 z-10 bg-black"
+              style={{
+                WebkitMaskImage: maskValue,
+                maskImage: maskValue,
+              }}
+            />
+          )}
 
           <motion.span
             className="font-sacramento absolute bottom-[15vh] z-20 flex text-2xl text-black md:text-3xl"
