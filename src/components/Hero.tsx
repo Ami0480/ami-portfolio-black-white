@@ -31,7 +31,6 @@ export function Hero() {
   const [revealed, setRevealed] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
   const isHoveringRef = useRef(false);
-  const revealCenterRef = useRef({ x: -1, y: -1 });
   const typingStartedRef = useRef(false);
   const prevScrollRef = useRef(0);
 
@@ -42,12 +41,15 @@ export function Hero() {
   const maskValue = useMotionValue("none");
 
   const { scrollYProgress } = useScroll();
-  const scrollRadius = useTransform(scrollYProgress, [0, 0.2], [40, 3000]);
+  const scrollRadius = useTransform(scrollYProgress, [0, 0.5], [40, 3000]);
 
   const updateCursorMask = () => {
-    if (!isHoveringRef.current || scrollYProgress.get() > 0) return;
+    if (!isHoveringRef.current) return;
+    const x = springX.get();
+    const y = springY.get();
+    const r = scrollRadius.get();
     maskValue.set(
-      `radial-gradient(circle 20px at ${springX.get()}px ${springY.get()}px, transparent 100%, black 100%)`,
+      `radial-gradient(circle ${r}px at ${x}px ${y}px, transparent 100%, black 100%)`,
     );
   };
 
@@ -58,23 +60,16 @@ export function Hero() {
     const isScrollingDown = value > prevScrollRef.current;
     prevScrollRef.current = value;
 
-    if (value > 0 && revealCenterRef.current.x === -1) {
-      revealCenterRef.current = {
-        x: springX.get() === -999 ? window.innerWidth / 2 : springX.get(),
-        y: springY.get() === -999 ? window.innerHeight / 2 : springY.get(),
-      };
-    }
-
     if (value >= 0.2 && isScrollingDown) {
-      setRevealed(true);
       if (!typingStartedRef.current) {
         typingStartedRef.current = true;
         setTypingStarted(true);
       }
     }
 
-    if (value > 0 && value < 0.2) {
-      const { x, y } = revealCenterRef.current;
+    if (value > 0 && value < 0.5) {
+      const x = springX.get() === -999 ? window.innerWidth / 2 : springX.get();
+      const y = springY.get() === -999 ? window.innerHeight / 2 : springY.get();
       const r = scrollRadius.get();
       maskValue.set(
         `radial-gradient(circle ${r}px at ${x}px ${y}px, transparent 100%, black 100%)`,
