@@ -9,6 +9,9 @@
 @utility font-sacramento {
   font-family: var(--font-sacramento), cursive;
 }
+@utility font-intertight {
+  font-family: var(--font-intertight), sans-serif;
+}
 body {
   font-family: var(--font-unica), sans-serif;
 }

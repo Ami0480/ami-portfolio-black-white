@@ -1,4 +1,4 @@
-import { Unica_One, Sacramento } from "next/font/google";
+import { Unica_One, Sacramento, Inter_Tight } from "next/font/google";
 import "./globals.css";
 
 const unica = Unica_One({
@@ -13,13 +13,21 @@ const sacramento = Sacramento({
   variable: "--font-sacramento",
 });
 
+const interTight = Inter_Tight({
+  subsets: ["latin"],
+  variable: "--font-intertight",
+});
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${unica.variable} ${sacramento.variable}`}>
+    <html
+      lang="en"
+      className={`${unica.variable} ${sacramento.variable} ${interTight.variable}`}
+    >
       <body>{children}</body>
     </html>
   );

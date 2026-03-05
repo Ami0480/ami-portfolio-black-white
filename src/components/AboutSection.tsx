@@ -34,7 +34,7 @@ export function AboutSection() {
             </motion.h2>
           </motion.div>
           <motion.div style={{ y: yBody }}>
-            <motion.p className="font-unica max-w-md text-sm leading-relaxed md:text-base text-right">
+            <motion.p className="font-intertight max-w-md text-sm leading-relaxed md:text-base text-right">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
