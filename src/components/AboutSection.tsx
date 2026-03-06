@@ -40,25 +40,37 @@ export function AboutSection() {
         </motion.div>
 
         {/* Right — title and paragraph with different parallax speeds */}
-        <div className="flex w-full flex-col gap-12 sm:w-1/2 items-end justify-center">
+        <div className="flex w-full flex-col gap-2 sm:w-1/2 items-end justify-center">
           <motion.h2
             className="font-unica text-3xl md:text-4xl tracking-tight text-right text-black"
             style={{ y: yTitle }}
           >
             about
           </motion.h2>
-          <motion.p
-            className="font-intertight max-w-md text-sm leading-relaxed md:text-base text-right text-black"
+          <motion.div
+            className="font-intertight max-w-lg text-sm font-light leading-relaxed md:text-base text-right text-black flex flex-col gap-4"
             style={{ y: yBody }}
           >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
-          </motion.p>
+            <p>
+              Hi, I’m Ami from Himeji, Japan, now living in Australia for 15
+              years.
+            </p>
+            <p>
+              After working in the health industry and management, I discovered
+              my passion for technology and problem-solving. I focus on
+              front-end development and continue expanding my skills by learning
+              back-end development, working toward becoming a full-stack
+              developer. I build clean, creative web experiences and explore
+              modern tools that make development more dynamic.
+            </p>
+            <p>
+              Outside of coding, I enjoy creating things — baking, DIY projects
+              like homemade softener and kids’ bubble mix, building Lego, and
+              traveling. I love experimenting and learning the science behind
+              how things work. I’ve visited more than 20 countries and enjoy
+              learning about different cultures and history.
+            </p>
+          </motion.div>
         </div>
       </div>
     </section>
