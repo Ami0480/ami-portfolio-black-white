@@ -58,7 +58,7 @@ export function WorkSection() {
             {REPEATED.map((project, index) => (
               <article
                 key={index}
-                className="flex h-full w-[35vw] shrink-0 flex-col justify-between rounded-sm rounded-tr-[40px] bg-black p-6 font-unica text-white"
+                className="flex h-full w-[35vw] shrink-0 flex-col justify-between rounded-sm rounded-tr-[80px] bg-black p-6 font-unica text-white"
               >
                 <h3 className="text-xl md:text-2xl">{project.title}</h3>
                 <p className="text-sm leading-relaxed opacity-90 md:text-base">
