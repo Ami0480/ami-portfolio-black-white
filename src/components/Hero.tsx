@@ -112,6 +112,16 @@ export function Hero() {
 
   return (
     <>
+      {!revealed && (
+        <motion.div
+          className="pointer-events-none fixed inset-0 z-40 bg-black"
+          style={{
+            WebkitMaskImage: maskValue,
+            maskImage: maskValue,
+          }}
+        />
+      )}
+
       <nav className="fixed inset-x-0 top-8 z-50 flex justify-center mix-blend-difference">
         <ul className="flex gap-6 text-xs md:text-sm text-white">
           <li>
@@ -147,7 +157,7 @@ export function Hero() {
       <section className="relative h-[300vh] bg-white">
         <div
           ref={sectionRef}
-          className="sticky top-0 flex h-screen w-full items-center justify-center overflow-hidden bg-white"
+          className="sticky top-0 flex h-screen w-full items-center justify-center bg-white"
           onMouseMove={handleMouseMove}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
@@ -160,16 +170,6 @@ export function Hero() {
               ami
             </span>
           </motion.div>
-
-          {!revealed && (
-            <motion.div
-              className="pointer-events-none absolute inset-0 z-10 bg-black"
-              style={{
-                WebkitMaskImage: maskValue,
-                maskImage: maskValue,
-              }}
-            />
-          )}
 
           <motion.span
             className="font-sacramento absolute bottom-[15vh] z-20 flex text-2xl text-black md:text-3xl"
