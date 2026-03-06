@@ -25,11 +25,10 @@ export function ContactSection() {
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: ["start start", "end end"],
+    offset: ["start end", "end end"],
   });
 
-  const scrollRadius = useTransform(scrollYProgress, [0.3, 1], [3000, 40]);
-  const smoothRadius = useSpring(scrollRadius, { stiffness: 50, damping: 100 });
+  const scrollRadius = useTransform(scrollYProgress, [0, 0.9], [3000, 40]);
 
   const updateMask = () => {
     const r = scrollRadius.get();
@@ -43,16 +42,6 @@ export function ContactSection() {
   useMotionValueEvent(springX, "change", updateMask);
   useMotionValueEvent(springY, "change", updateMask);
   useMotionValueEvent(scrollRadius, "change", updateMask);
-
-  useMotionValueEvent(scrollYProgress, "change", (value) => {
-    if (value < 0.4) {
-      const x = isHoveringRef.current ? springX.get() : window.innerWidth / 2;
-      const y = isHoveringRef.current ? springY.get() : window.innerHeight / 2;
-      maskValue.set(
-        `radial-gradient(circle 3000px at ${x}px ${y}px, white 100%, transparent 100%)`,
-      );
-    }
-  });
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -69,7 +58,7 @@ export function ContactSection() {
     <section
       ref={sectionRef}
       id="contact"
-      className="relative h-[200vh] bg-black"
+      className="relative h-[300vh] bg-black -mt-[100vh]"
     >
       <div className="sticky top-0 h-screen w-full overflow-hidden">
         {/* Content */}
