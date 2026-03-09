@@ -32,7 +32,7 @@ export function WorkSection() {
 
   const titleOpacity = useTransform(scrollYProgress, [0.9, 0.95], [1, 0]);
 
-  const projectsX = useTransform(scrollYProgress, [0, 1], ["50vw", "-250vw"]);
+  const projectsX = useTransform(scrollYProgress, [0, 1], ["50vw", "-260vw"]);
 
   return (
     <section ref={sectionRef} id="work" className="relative h-[800vh] bg-white">
