@@ -65,10 +65,10 @@ export function AboutSection() {
             </p>
             <p>
               Outside of coding, I enjoy creating things — baking, DIY projects
-              like homemade softener and kids’ bubble mix, building Lego, and
-              traveling. I love experimenting and learning the science behind
-              how things work. I’ve visited more than 20 countries and enjoy
-              learning about different cultures and history.
+              like homemade softener and kids’ bubble mix, building marble run,
+              and traveling. I love experimenting and learning the science
+              behind how things work. I’ve visited more than 20 countries and
+              enjoy learning about different cultures and history.
             </p>
           </motion.div>
         </div>
