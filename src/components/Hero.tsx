@@ -44,9 +44,8 @@ export function Hero() {
   const scrollRadius = useTransform(scrollYProgress, [0, 0.5], [40, 3000]);
 
   const updateCursorMask = () => {
-    if (!isHoveringRef.current) return;
-    const x = springX.get();
-    const y = springY.get();
+    const x = springX.get() === -999 ? window.innerWidth / 2 : springX.get();
+    const y = springY.get() === -999 ? window.innerHeight / 2 : springY.get();
     const r = scrollRadius.get();
     maskValue.set(
       `radial-gradient(circle ${r}px at ${x}px ${y}px, transparent 100%, black 100%)`,
@@ -82,24 +81,22 @@ export function Hero() {
     const lenis = new Lenis({ autoRaf: true, lerp: 0.08 });
     return () => lenis.destroy();
   }, []);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    const lenis = new Lenis({ autoRaf: true, lerp: 0.08 });
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = sectionRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    cursorX.set(e.clientX - rect.left);
-    cursorY.set(e.clientY - rect.top);
-  };
+    const handleMouseMove = (e: MouseEvent) => {
+      cursorX.set(e.clientX);
+      cursorY.set(e.clientY);
+      isHoveringRef.current = true;
+    };
 
-  const handleMouseEnter = () => {
-    isHoveringRef.current = true;
-  };
-
-  const handleMouseLeave = () => {
-    isHoveringRef.current = false;
-    if (scrollYProgress.get() === 0) {
-      maskValue.set("none");
-    }
-  };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => {
+      lenis.destroy();
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, [cursorX, cursorY]);
 
   const handleScrollTo = (id: string) => {
     const el = document.getElementById(id);
@@ -158,9 +155,6 @@ export function Hero() {
         <div
           ref={sectionRef}
           className="sticky top-0 flex h-screen w-full items-center justify-center bg-white"
-          onMouseMove={handleMouseMove}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
         >
           <motion.div
             className="pointer-events-none z-0 flex h-full w-full items-center justify-center"
