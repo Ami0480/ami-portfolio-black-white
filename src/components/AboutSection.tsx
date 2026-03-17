@@ -60,15 +60,17 @@ export function AboutSection() {
               my passion for technology and problem-solving. I focus on
               front-end development and continue expanding my skills by learning
               back-end development, working toward becoming a full-stack
-              developer. I build clean, creative web experiences and explore
-              modern tools that make development more dynamic.
+              developer. Recently, I’ve also been interested in vibe coding —
+              experimenting with ideas, tools, and creative workflows to make
+              development more intuitive and fun.
             </p>
             <p>
               Outside of coding, I enjoy creating things — baking, DIY projects
-              like homemade softener and kids’ bubble mix, building marble run,
-              and traveling. I love experimenting and learning the science
-              behind how things work. I’ve visited more than 20 countries and
-              enjoy learning about different cultures and history.
+              like homemade softener and kids’ bubble mix, and traveling. I love
+              experimenting and learning the science behind how things work.
+              I’ve visited more than 20 countries and enjoy learning about
+              different cultures. I’m always happy to exchange ideas and share
+              experiences with people from different backgrounds.
             </p>
           </motion.div>
         </div>
