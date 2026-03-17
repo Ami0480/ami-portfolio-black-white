@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 const PROJECTS = [
@@ -30,9 +30,31 @@ export function WorkSection() {
     offset: ["start start", "end end"],
   });
 
-  const titleOpacity = useTransform(scrollYProgress, [0.9, 0.95], [1, 0]);
+  const [isMobile, setIsMobile] = useState(false);
 
-  const projectsX = useTransform(scrollYProgress, [0, 1], ["50vw", "-200vw"]);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 640);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  const titleOpacity = useTransform(scrollYProgress, [0.9, 0.95], [1, 0]);
+  // Mobile: fade out earlier, before contact's white overlay covers it
+  const titleOpacityMobile = useTransform(scrollYProgress, [0.65, 0.8], [1, 0]);
+
+  // Mobile: 3 cards × 80vw = 240vw total, needs more travel to scroll through completely
+  const projectsXDesktop = useTransform(
+    scrollYProgress,
+    [0, 1],
+    ["50vw", "-200vw"]
+  );
+  const projectsXMobile = useTransform(
+    scrollYProgress,
+    [0, 1],
+    ["6rem", "-400vw"]
+  );
+  const projectsX = isMobile ? projectsXMobile : projectsXDesktop;
 
   return (
     <section ref={sectionRef} id="work" className="relative h-[350vh] bg-white">
@@ -52,13 +74,13 @@ export function WorkSection() {
       <div className="sticky top-0 h-screen w-full overflow-hidden">
         {/* Mobile title */}
         <motion.h2
-          className="sm:hidden font-unica text-3xl tracking-tight text-black pl-6 pt-8"
-          style={{ opacity: titleOpacity }}
+          className="sm:hidden font-unica text-3xl tracking-tight text-black pl-6 pt-24"
+          style={{ opacity: titleOpacityMobile }}
         >
           work
         </motion.h2>
 
-        <div className="absolute inset-0 flex items-center pt-16 sm:pt-0">
+        <div className="absolute inset-0 flex items-center pt-28 sm:pt-0">
           <motion.div
             className="flex h-[60vh] sm:h-[70vh] items-stretch gap-8 py-8 sm:py-16 will-change-transform"
             style={{ x: projectsX }}

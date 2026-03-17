@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import Lenis from "lenis";
 import {
   motion,
+  animate,
   useScroll,
   useMotionValue,
   useMotionValueEvent,
@@ -28,7 +29,7 @@ const subtitleLetter = {
 
 export function Hero() {
   const [typingStarted, setTypingStarted] = useState(false);
-  const [revealed, setRevealed] = useState(false);
+  const [revealed] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
   const isHoveringRef = useRef(false);
   const typingStartedRef = useRef(false);
@@ -40,20 +41,30 @@ export function Hero() {
   const springY = useSpring(cursorY, { stiffness: 150, damping: 20 });
   const maskValue = useMotionValue("none");
 
+  const isMobileRef = useRef(false);
+  const breatheOffset = useMotionValue(0);
+  const breatheControlsRef = useRef<{ stop: () => void } | null>(null);
+
   const { scrollYProgress } = useScroll();
   const scrollRadius = useTransform(scrollYProgress, [0, 0.5], [40, 3000]);
+  // Mobile: start at 10px for a very small initial circle
+  const scrollRadiusMobile = useTransform(scrollYProgress, [0, 0.5], [5, 3000]);
 
   const updateCursorMask = () => {
     const x = springX.get() === -999 ? window.innerWidth / 2 : springX.get();
     const y = springY.get() === -999 ? window.innerHeight / 2 : springY.get();
-    const r = scrollRadius.get();
+    const base = isMobileRef.current
+      ? scrollRadiusMobile.get()
+      : scrollRadius.get();
+    const r = isMobileRef.current ? base + breatheOffset.get() : base;
     maskValue.set(
-      `radial-gradient(circle ${r}px at ${x}px ${y}px, transparent 100%, black 100%)`,
+      `radial-gradient(circle ${r}px at ${x}px ${y}px, transparent 100%, black 100%)`
     );
   };
 
   useMotionValueEvent(springX, "change", updateCursorMask);
   useMotionValueEvent(springY, "change", updateCursorMask);
+  useMotionValueEvent(breatheOffset, "change", updateCursorMask);
 
   useMotionValueEvent(scrollYProgress, "change", (value) => {
     const isScrollingDown = value > prevScrollRef.current;
@@ -66,12 +77,21 @@ export function Hero() {
       }
     }
 
+    // Stop breathing when user starts scrolling
+    if (value > 0.03 && breatheControlsRef.current) {
+      breatheControlsRef.current.stop();
+      breatheOffset.set(0);
+      breatheControlsRef.current = null;
+    }
+
     if (value > 0 && value < 0.5) {
       const x = springX.get() === -999 ? window.innerWidth / 2 : springX.get();
       const y = springY.get() === -999 ? window.innerHeight / 2 : springY.get();
-      const r = scrollRadius.get();
+      const r = isMobileRef.current
+        ? scrollRadiusMobile.get()
+        : scrollRadius.get();
       maskValue.set(
-        `radial-gradient(circle ${r}px at ${x}px ${y}px, transparent 100%, black 100%)`,
+        `radial-gradient(circle ${r}px at ${x}px ${y}px, transparent 100%, black 100%)`
       );
     }
   });
@@ -79,8 +99,32 @@ export function Hero() {
   useEffect(() => {
     window.scrollTo(0, 0);
     const lenis = new Lenis({ autoRaf: true, lerp: 0.08 });
-    return () => lenis.destroy();
-  }, []);
+
+    // On touch devices (mobile), initialize mask to a small circle at center
+    // since there is no cursor movement to trigger it
+    const isTouchDevice =
+      "ontouchstart" in window || navigator.maxTouchPoints > 0;
+    isMobileRef.current = isTouchDevice && window.innerWidth < 640;
+    if (isMobileRef.current) {
+      const x = window.innerWidth / 2;
+      const y = window.innerHeight / 2;
+      const r = scrollRadiusMobile.get();
+      maskValue.set(
+        `radial-gradient(circle ${r}px at ${x}px ${y}px, transparent 100%, black 100%)`
+      );
+      // Start breathing animation — oscillates ±30px around base radius
+      breatheControlsRef.current = animate(breatheOffset, [0, 3, 0], {
+        duration: 3,
+        repeat: Infinity,
+        ease: "easeInOut",
+      });
+    }
+
+    return () => {
+      lenis.destroy();
+      breatheControlsRef.current?.stop();
+    };
+  }, [maskValue, scrollRadius, scrollRadiusMobile, breatheOffset]);
   useEffect(() => {
     window.scrollTo(0, 0);
     const lenis = new Lenis({ autoRaf: true, lerp: 0.08 });
