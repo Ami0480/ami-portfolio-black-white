@@ -28,7 +28,7 @@ export function ContactSection() {
     offset: ["start end", "end end"],
   });
 
-  const scrollRadius = useTransform(scrollYProgress, [0, 0.9], [3000, 40]);
+  const scrollRadius = useTransform(scrollYProgress, [0, 0.6], [3000, 40]);
 
   const updateMask = () => {
     const r = scrollRadius.get();
