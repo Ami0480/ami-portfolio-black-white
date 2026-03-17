@@ -15,7 +15,7 @@ export function ContactSection() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const isHoveringRef = useRef(false);
   const maskValue = useMotionValue(
-    "radial-gradient(circle 3000px at 50% 50%, white 100%, transparent 100%)",
+    "radial-gradient(circle 3000px at 50% 50%, white 100%, transparent 100%)"
   );
 
   const cursorX = useMotionValue(0);
@@ -35,7 +35,7 @@ export function ContactSection() {
     const x = isHoveringRef.current ? springX.get() : window.innerWidth / 2;
     const y = isHoveringRef.current ? springY.get() : window.innerHeight / 2;
     maskValue.set(
-      `radial-gradient(circle ${r}px at ${x}px ${y}px, white 100%, transparent 100%)`,
+      `radial-gradient(circle ${r}px at ${x}px ${y}px, white 100%, transparent 100%)`
     );
   };
 
@@ -83,6 +83,14 @@ export function ContactSection() {
                 className="font-unica text-2xl md:text-3xl tracking-tight text-white transition-all duration-200 hover:translate-x-2 hover:opacity-80"
               >
                 LinkedIn
+              </Link>
+              <Link
+                href="https://github.com/Ami0480"
+                target="_blank"
+                rel="noreferrer"
+                className="font-unica text-2xl md:text-3xl tracking-tight text-white transition-all duration-200 hover:translate-x-2 hover:opacity-80"
+              >
+                Github
               </Link>
               <Link
                 href="https://x.com/CodeCrafty"
