@@ -59,7 +59,7 @@ export function AboutSection() {
             about
           </motion.h2>
           <motion.div
-            className="font-intertight max-w-md text-sm font-light leading-relaxed md:text-base text-left sm:text-right text-black flex flex-col gap-4"
+            className="font-intertight max-w-md text-sm font-light leading-relaxed md:text-base text-left sm:text-right sm:max-w-3/4 text-black flex flex-col gap-4"
             style={{ y: yBody }}
           >
             <p>
