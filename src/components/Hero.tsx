@@ -175,35 +175,35 @@ export function Hero() {
 
       <nav className="fixed inset-x-0 top-8 z-50 flex justify-center mix-blend-difference">
         <div className="w-full max-w-[1920px] mx-auto flex justify-center">
-        <ul className="flex gap-6 text-xs md:text-sm text-white">
-          <li>
-            <button
-              type="button"
-              onClick={() => handleScrollTo("about")}
-              className="tracking-wide"
-            >
-              about
-            </button>
-          </li>
-          <li>
-            <button
-              type="button"
-              onClick={() => handleScrollTo("work")}
-              className="tracking-wide"
-            >
-              work
-            </button>
-          </li>
-          <li>
-            <button
-              type="button"
-              onClick={() => handleScrollTo("contact")}
-              className="tracking-wide"
-            >
-              contact
-            </button>
-          </li>
-        </ul>
+          <ul className="flex gap-6 text-xs md:text-sm text-white">
+            <li>
+              <button
+                type="button"
+                onClick={() => handleScrollTo("about")}
+                className="tracking-wide"
+              >
+                about
+              </button>
+            </li>
+            <li>
+              <button
+                type="button"
+                onClick={() => handleScrollTo("work")}
+                className="tracking-wide"
+              >
+                work
+              </button>
+            </li>
+            <li>
+              <button
+                type="button"
+                onClick={() => handleScrollTo("contact")}
+                className="tracking-wide"
+              >
+                contact
+              </button>
+            </li>
+          </ul>
         </div>
       </nav>
 

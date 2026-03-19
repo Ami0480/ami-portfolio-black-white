@@ -16,7 +16,7 @@ export function ContactSection() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const isHoveringRef = useRef(false);
   const maskValue = useMotionValue(
-    "radial-gradient(circle 3000px at 50% 50%, white 100%, transparent 100%)"
+    "radial-gradient(circle 3700px at 50% 50%, white 100%, transparent 100%)"
   );
 
   const cursorX = useMotionValue(0);
@@ -29,9 +29,12 @@ export function ContactSection() {
     offset: ["start end", "end end"],
   });
 
-  const scrollRadius = useTransform(scrollYProgress, [0, 0.6], [3700, 40]);
-  // Mobile: start at 600px so shrinking is immediately visible on small screens
-  const scrollRadiusMobile = useTransform(scrollYProgress, [0, 0.6], [950, 0]);
+  // Content slides up starting at ~0.1 progress — synced with work title fade-out
+  const yContent = useTransform(scrollYProgress, [0.1, 0.5], [800, 0]);
+
+  // Circle shrinks at the same time content enters
+  const scrollRadius = useTransform(scrollYProgress, [0.1, 0.8], [3700, 40]);
+  const scrollRadiusMobile = useTransform(scrollYProgress, [0.1, 0.8], [950, 0]);
 
   const isMobileRef = useRef(false);
   const breatheOffset = useMotionValue(0);
@@ -60,9 +63,9 @@ export function ContactSection() {
   useMotionValueEvent(scrollRadiusMobile, "change", updateMask);
   useMotionValueEvent(breatheOffset, "change", updateMask);
 
-  // Stop breathing once user starts scrolling
+  // Stop breathing when content starts appearing
   useMotionValueEvent(scrollYProgress, "change", (value) => {
-    if (value > 0.05 && breatheControlsRef.current) {
+    if (value > 0.1 && breatheControlsRef.current) {
       breatheControlsRef.current.stop();
       breatheOffset.set(0);
       breatheControlsRef.current = null;
@@ -103,52 +106,56 @@ export function ContactSection() {
     <section
       ref={sectionRef}
       id="contact"
-      className="relative h-[280vh] bg-black -mt-[100vh]"
+      className="relative h-[250vh] bg-black -mt-[100vh]"
     >
-      <div className="sticky top-0 h-screen w-full overflow-hidden">
-        {/* Content */}
-        <div className="relative z-30 flex h-full items-stretch justify-center">
-        <div className="w-full max-w-480 flex flex-col sm:flex-row sm:items-stretch mix-blend-difference justify-start sm:justify-normal gap-20 sm:gap-0 px-6 sm:px-0 pt-24 sm:pt-0">
-          <div className="flex sm:w-[85%] items-start sm:items-center justify-start sm:pl-6 md:pl-12">
-            <h2 className="font-unica text-3xl md:text-4xl tracking-tight text-white">
-              contact
-            </h2>
-          </div>
-          <div className="flex sm:w-[15%] items-start sm:items-center sm:justify-end sm:pr-6 md:pr-12">
-            <div className="flex w-full max-w-md flex-col gap-6 text-left sm:text-right">
-              <Link
-                href="mailto:amifuku80@gmail.com"
-                className="font-unica text-2xl md:text-3xl tracking-tight text-white transition-all duration-200 hover:translate-x-2 hover:opacity-80"
-              >
-                Email
-              </Link>
-              <Link
-                href="https://www.linkedin.com/in/amifukuyama/"
-                target="_blank"
-                rel="noreferrer"
-                className="font-unica text-2xl md:text-3xl tracking-tight text-white transition-all duration-200 hover:translate-x-2 hover:opacity-80"
-              >
-                LinkedIn
-              </Link>
-              <Link
-                href="https://github.com/Ami0480"
-                target="_blank"
-                rel="noreferrer"
-                className="font-unica text-2xl md:text-3xl tracking-tight text-white transition-all duration-200 hover:translate-x-2 hover:opacity-80"
-              >
-                Github
-              </Link>
-              <Link
-                href="https://x.com/CodeCrafty"
-                target="_blank"
-                rel="noreferrer"
-                className="font-unica text-2xl md:text-3xl tracking-tight text-white transition-all duration-200 hover:translate-x-2 hover:opacity-80"
-              >
-                X
-              </Link>
+      <div className="sticky top-0 h-screen w-full ">
+        {/* mix-blend-difference on the static z-30 wrapper — no transform here,
+            so no isolated compositing layer; the sticky div's overflow-hidden clips the motion.div */}
+        <div className="relative z-30 flex h-full items-stretch justify-center mix-blend-difference">
+          <motion.div
+            className="w-full max-w-480 flex flex-col sm:flex-row sm:items-stretch justify-start sm:justify-normal gap-20 sm:gap-0 px-6 sm:px-0 pt-24 sm:pt-0"
+            style={{ y: yContent }}
+          >
+            <div className="flex sm:w-[85%] items-start sm:items-center justify-start sm:pl-6 md:pl-12">
+              <h2 className="font-unica text-3xl md:text-4xl tracking-tight text-white">
+                contact
+              </h2>
             </div>
-          </div>
-        </div>
+            <div className="flex sm:w-[15%] items-start sm:items-center sm:justify-end sm:pr-6 md:pr-12">
+              <div className="flex w-full max-w-md flex-col gap-6 text-left sm:text-right">
+                <Link
+                  href="mailto:amifuku80@gmail.com"
+                  className="font-unica text-2xl md:text-3xl tracking-tight text-white transition-all duration-200 hover:translate-x-2 hover:opacity-80"
+                >
+                  Email
+                </Link>
+                <Link
+                  href="https://www.linkedin.com/in/amifukuyama/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="font-unica text-2xl md:text-3xl tracking-tight text-white transition-all duration-200 hover:translate-x-2 hover:opacity-80"
+                >
+                  LinkedIn
+                </Link>
+                <Link
+                  href="https://github.com/Ami0480"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="font-unica text-2xl md:text-3xl tracking-tight text-white transition-all duration-200 hover:translate-x-2 hover:opacity-80"
+                >
+                  Github
+                </Link>
+                <Link
+                  href="https://x.com/CodeCrafty"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="font-unica text-2xl md:text-3xl tracking-tight text-white transition-all duration-200 hover:translate-x-2 hover:opacity-80"
+                >
+                  X
+                </Link>
+              </div>
+            </div>
+          </motion.div>
         </div>
 
         {/* White overlay with cursor-following circle */}

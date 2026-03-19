@@ -48,7 +48,7 @@ export function WorkSection() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  const titleOpacity = useTransform(scrollYProgress, [0.9, 0.95], [1, 0]);
+  const titleOpacity = useTransform(scrollYProgress, [0.65, 1.0], [1, 0]);
   // Mobile: fade out earlier, before contact's white overlay covers it
   const titleOpacityMobile = useTransform(scrollYProgress, [0.65, 0.8], [1, 0]);
 
@@ -66,7 +66,7 @@ export function WorkSection() {
   const projectsX = isMobile ? projectsXMobile : projectsXDesktop;
 
   return (
-    <section ref={sectionRef} id="work" className="relative h-[350vh] bg-white">
+    <section ref={sectionRef} id="work" className="relative h-[320vh] bg-white">
       {/* Title layer — desktop only overlay */}
       <div className="pointer-events-none sticky top-0 z-50 h-0 mix-blend-difference hidden sm:block">
         <div className="max-w-480 mx-auto w-full">
