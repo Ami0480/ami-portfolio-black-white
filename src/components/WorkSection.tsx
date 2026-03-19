@@ -5,18 +5,27 @@ import { motion, useScroll, useTransform } from "framer-motion";
 
 const PROJECTS = [
   {
-    title: "Project One",
+    title: "Spa Booking Website",
     description:
-      "A minimal interface for focused workflows and clear hierarchy.",
+      "Booking platform with customer and staff workflows, powered by Supabase.",
+    link: "https://naturespa-website.netlify.app/",
+    label: "Booking Website",
+    link2: "https://naturespa-website.netlify.app/dashboard/bookings",
+    label2: "Staff Dashboard",
   },
   {
-    title: "Project Two",
+    title: "Personal Diary",
     description:
-      "Brand and digital experience with strong typography and motion.",
+      "Personal diary app with date-based entries, photo uploads, and secure authentication.",
+    link: "https://dear-today.netlify.app/",
+    label: "Dear Today",
   },
   {
-    title: "Project Three",
-    description: "Design system and component library for consistent products.",
+    title: "Weather for the Laundry",
+    description:
+      "A laundry-focused weather app that helps decide the best day to dry clothes, powered by real-time global data.",
+    link: "https://laundry-app-vscode.netlify.app/",
+    label: "Laundry Weather App",
   },
 ];
 
@@ -52,7 +61,7 @@ export function WorkSection() {
   const projectsXMobile = useTransform(
     scrollYProgress,
     [0, 1],
-    ["6rem", "-400vw"]
+    ["10rem", "-400vw"]
   );
   const projectsX = isMobile ? projectsXMobile : projectsXDesktop;
 
@@ -91,9 +100,36 @@ export function WorkSection() {
                 className="flex h-full w-[80vw] sm:w-[35vw] shrink-0 flex-col justify-between rounded-sm rounded-tr-[80px] bg-black p-6 font-unica text-white"
               >
                 <h3 className="text-xl md:text-2xl">{project.title}</h3>
-                <p className="text-sm leading-relaxed opacity-90 md:text-base">
-                  {project.description}
-                </p>
+                <div className="flex flex-col flex-1 justify-end gap-2">
+                  <p className="font-intertight font-extralight text-sm leading-relaxed opacity-90 md:text-base">
+                    {project.description}
+                  </p>
+                  <div className="flex flex-wrap gap-4">
+                    <a
+                      href={project.link}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="font-intertight text-sm opacity-90 md:text-base underline decoration-[0.5px] underline-offset-4 hover:opacity-60 transition-opacity"
+                    >
+                      {project.label}
+                    </a>
+                    {"link2" in project && (
+                      <a
+                        href={
+                          (project as typeof project & { link2: string }).link2
+                        }
+                        target="_blank"
+                        rel="noreferrer"
+                        className="font-intertight text-sm opacity-90 md:text-base underline decoration-[0.5px] underline-offset-4 hover:opacity-60 transition-opacity"
+                      >
+                        {
+                          (project as typeof project & { label2: string })
+                            .label2
+                        }
+                      </a>
+                    )}
+                  </div>
+                </div>
               </article>
             ))}
           </motion.div>
