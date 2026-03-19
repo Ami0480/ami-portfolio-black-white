@@ -34,7 +34,11 @@ export function ContactSection() {
 
   // Circle shrinks at the same time content enters
   const scrollRadius = useTransform(scrollYProgress, [0.1, 0.8], [3700, 40]);
-  const scrollRadiusMobile = useTransform(scrollYProgress, [0.1, 0.8], [950, 0]);
+  const scrollRadiusMobile = useTransform(
+    scrollYProgress,
+    [0.1, 0.8],
+    [950, 0]
+  );
 
   const isMobileRef = useRef(false);
   const breatheOffset = useMotionValue(0);
@@ -106,7 +110,7 @@ export function ContactSection() {
     <section
       ref={sectionRef}
       id="contact"
-      className="relative h-[250vh] bg-black -mt-[100vh]"
+      className="relative h-[250vh] bg-black -mt-[calc(100vh+10px)]"
     >
       <div className="sticky top-0 h-screen w-full ">
         {/* mix-blend-difference on the static z-30 wrapper — no transform here,

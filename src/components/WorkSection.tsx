@@ -66,7 +66,7 @@ export function WorkSection() {
   const projectsX = isMobile ? projectsXMobile : projectsXDesktop;
 
   return (
-    <section ref={sectionRef} id="work" className="relative h-[320vh] bg-white">
+    <section ref={sectionRef} id="work" className="relative h-[340vh] bg-white">
       {/* Title layer — desktop only overlay */}
       <div className="pointer-events-none sticky top-0 z-50 h-0 mix-blend-difference hidden sm:block">
         <div className="max-w-480 mx-auto w-full">

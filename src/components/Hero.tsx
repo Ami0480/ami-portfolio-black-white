@@ -158,8 +158,8 @@ export function Hero() {
     el.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-  const yAmi = useTransform(scrollYProgress, [0.2, 1], [0, -150]);
-  const ySubtitle = useTransform(scrollYProgress, [0.2, 1], [0, -400]);
+  const yAmi = useTransform(scrollYProgress, [0.1, 1], [0, -150]);
+  const ySubtitle = useTransform(scrollYProgress, [0.1, 1], [0, -400]);
 
   return (
     <>
