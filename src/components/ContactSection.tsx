@@ -107,7 +107,8 @@ export function ContactSection() {
     >
       <div className="sticky top-0 h-screen w-full overflow-hidden">
         {/* Content */}
-        <div className="relative z-30 flex h-full flex-col sm:flex-row sm:items-stretch mix-blend-difference justify-start sm:justify-normal gap-20 sm:gap-0 px-6 sm:px-0 pt-24 sm:pt-0">
+        <div className="relative z-30 flex h-full items-stretch justify-center">
+        <div className="w-full max-w-480 flex flex-col sm:flex-row sm:items-stretch mix-blend-difference justify-start sm:justify-normal gap-20 sm:gap-0 px-6 sm:px-0 pt-24 sm:pt-0">
           <div className="flex sm:w-[85%] items-start sm:items-center justify-start sm:pl-6 md:pl-12">
             <h2 className="font-unica text-3xl md:text-4xl tracking-tight text-white">
               contact
@@ -147,6 +148,7 @@ export function ContactSection() {
               </Link>
             </div>
           </div>
+        </div>
         </div>
 
         {/* White overlay with cursor-following circle */}

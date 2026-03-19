@@ -24,7 +24,7 @@ export function AboutSection() {
       id="about"
       className="min-h-[120vh] bg-white text-black flex flex-col justify-center overflow-hidden"
     >
-      <div className="flex flex-col sm:flex-row h-full w-full items-start sm:items-center px-6 md:px-12 py-24 gap-8">
+      <div className="flex flex-col sm:flex-row h-full w-full max-w-480 mx-auto items-start sm:items-center px-6 md:px-12 py-24 gap-8">
         {/* Image + Japanese — order 1 on desktop (left), order 3 on mobile (after english) */}
         <div className="order-3 sm:order-1 w-full sm:w-1/2 flex flex-col gap-4 my-8 sm:my-0">
           <motion.div

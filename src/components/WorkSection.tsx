@@ -69,13 +69,15 @@ export function WorkSection() {
     <section ref={sectionRef} id="work" className="relative h-[350vh] bg-white">
       {/* Title layer — desktop only overlay */}
       <div className="pointer-events-none sticky top-0 z-50 h-0 mix-blend-difference hidden sm:block">
-        <div className="flex h-screen w-[30%] items-center pl-6 md:pl-12">
-          <motion.h2
-            className="font-unica text-3xl md:text-4xl tracking-tight text-white"
-            style={{ opacity: titleOpacity }}
-          >
-            work
-          </motion.h2>
+        <div className="max-w-480 mx-auto w-full">
+          <div className="flex h-screen w-[30%] items-center pl-6 md:pl-12">
+            <motion.h2
+              className="font-unica text-3xl md:text-4xl tracking-tight text-white"
+              style={{ opacity: titleOpacity }}
+            >
+              work
+            </motion.h2>
+          </div>
         </div>
       </div>
 

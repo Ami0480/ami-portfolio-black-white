@@ -174,6 +174,7 @@ export function Hero() {
       )}
 
       <nav className="fixed inset-x-0 top-8 z-50 flex justify-center mix-blend-difference">
+        <div className="w-full max-w-[1920px] mx-auto flex justify-center">
         <ul className="flex gap-6 text-xs md:text-sm text-white">
           <li>
             <button
@@ -203,6 +204,7 @@ export function Hero() {
             </button>
           </li>
         </ul>
+        </div>
       </nav>
 
       <section className="relative h-[300vh] bg-white">
@@ -210,32 +212,34 @@ export function Hero() {
           ref={sectionRef}
           className="sticky top-0 flex h-screen w-full items-center justify-center bg-white"
         >
-          <motion.div
-            className="pointer-events-none z-0 flex h-full w-full items-center justify-center"
-            style={{ y: yAmi }}
-          >
-            <span className="font-unica select-none text-[clamp(6rem,20vw,14rem)] font-normal leading-none text-black">
-              ami
-            </span>
-          </motion.div>
+          <div className="relative w-full max-w-480 mx-auto h-full flex items-center justify-center">
+            <motion.div
+              className="pointer-events-none z-0 flex h-full w-full items-center justify-center"
+              style={{ y: yAmi }}
+            >
+              <span className="font-unica select-none text-[clamp(6rem,20vw,14rem)] font-normal leading-none text-black">
+                ami
+              </span>
+            </motion.div>
 
-          <motion.span
-            className="font-sacramento absolute bottom-[15vh] z-20 flex text-2xl text-black md:text-3xl"
-            style={{ y: ySubtitle }}
-            variants={subtitleContainer}
-            initial="hidden"
-            animate={typingStarted ? "visible" : "hidden"}
-          >
-            {subtitleText.split("").map((char, index) => (
-              <motion.span
-                key={`${char}-${index}`}
-                variants={subtitleLetter}
-                className="inline-block"
-              >
-                {char === " " ? "\u00A0" : char}
-              </motion.span>
-            ))}
-          </motion.span>
+            <motion.span
+              className="font-sacramento absolute bottom-[15vh] z-20 flex text-2xl text-black md:text-3xl"
+              style={{ y: ySubtitle }}
+              variants={subtitleContainer}
+              initial="hidden"
+              animate={typingStarted ? "visible" : "hidden"}
+            >
+              {subtitleText.split("").map((char, index) => (
+                <motion.span
+                  key={`${char}-${index}`}
+                  variants={subtitleLetter}
+                  className="inline-block"
+                >
+                  {char === " " ? "\u00A0" : char}
+                </motion.span>
+              ))}
+            </motion.span>
+          </div>
         </div>
       </section>
     </>
