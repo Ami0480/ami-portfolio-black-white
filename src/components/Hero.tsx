@@ -84,6 +84,16 @@ export function Hero() {
       breatheControlsRef.current = null;
     }
 
+    // Restart breathing when user scrolls back to top on mobile
+    if (value <= 0.03 && isMobileRef.current && !breatheControlsRef.current) {
+      breatheOffset.set(0);
+      breatheControlsRef.current = animate(breatheOffset, [0, 3, 0], {
+        duration: 3,
+        repeat: Infinity,
+        ease: "easeInOut",
+      });
+    }
+
     if (value > 0 && value < 0.5) {
       const x = springX.get() === -999 ? window.innerWidth / 2 : springX.get();
       const y = springY.get() === -999 ? window.innerHeight / 2 : springY.get();
