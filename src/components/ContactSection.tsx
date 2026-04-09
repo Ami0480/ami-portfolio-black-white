@@ -128,7 +128,7 @@ export function ContactSection() {
             <div className="flex sm:w-[15%] items-start sm:items-center sm:justify-end sm:pr-6 md:pr-12">
               <div className="flex w-full max-w-md flex-col gap-6 text-left sm:text-right">
                 <Link
-                  href="mailto:amifuku80@gmail.com"
+                  href="mailto:hello@amifukuyama.com"
                   className="font-unica text-2xl md:text-3xl tracking-tight text-white transition-all duration-200 hover:translate-x-2 hover:opacity-80"
                 >
                   Email
