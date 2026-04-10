@@ -101,7 +101,8 @@ export function Hero() {
         ? scrollRadiusMobile.get()
         : scrollRadius.get();
       maskValue.set(
-        `radial-gradient(circle ${r}px at ${x}px ${y}px, transparent 100%, black 100%)`
+        `radial-gradient(circle ${r}px at ${x}px ${y}px, transparent 100%, black
+         100%)`
       );
     }
   });
