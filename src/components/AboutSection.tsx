@@ -33,11 +33,11 @@ export function AboutSection() {
           >
             <Image
               src="/images/image-blackandwhite.jpg"
-              alt="About"
+              alt="Ami Fukuyama – Frontend Developer based in Australia"
               width={480}
               height={320}
               className="w-full object-contain max-h-64 sm:max-h-80"
-              priority
+              loading="lazy"
             />
           </motion.div>
           <motion.p

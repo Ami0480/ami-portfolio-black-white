@@ -174,7 +174,7 @@ export function Hero() {
         />
       )}
 
-      <nav className="fixed inset-x-0 top-8 z-50 flex justify-center mix-blend-difference">
+      <nav aria-label="Main navigation" className="fixed inset-x-0 top-8 z-50 flex justify-center mix-blend-difference">
         <div className="w-full max-w-[1920px] mx-auto flex justify-center">
           <ul className="flex gap-6 text-xs md:text-sm text-white">
             <li>
@@ -218,12 +218,13 @@ export function Hero() {
               className="pointer-events-none z-0 flex h-full w-full items-center justify-center"
               style={{ y: yAmi }}
             >
-              <span className="font-unica select-none text-[clamp(6rem,20vw,14rem)] font-normal leading-none text-black">
+              <h1 className="font-unica select-none text-[clamp(6rem,20vw,14rem)] font-normal leading-none text-black">
                 ami
-              </span>
+              </h1>
             </motion.div>
 
-            <motion.span
+            <motion.p
+              aria-label={subtitleText}
               className="font-sacramento absolute bottom-[15vh] z-20 flex text-2xl text-black md:text-3xl"
               style={{ y: ySubtitle }}
               variants={subtitleContainer}
@@ -235,11 +236,12 @@ export function Hero() {
                   key={`${char}-${index}`}
                   variants={subtitleLetter}
                   className="inline-block"
+                  aria-hidden="true"
                 >
                   {char === " " ? "\u00A0" : char}
                 </motion.span>
               ))}
-            </motion.span>
+            </motion.p>
           </div>
         </div>
       </section>

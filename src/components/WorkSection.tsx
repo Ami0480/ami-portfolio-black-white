@@ -110,7 +110,7 @@ export function WorkSection() {
                     <a
                       href={project.link}
                       target="_blank"
-                      rel="noreferrer"
+                      rel="noopener noreferrer"
                       className="font-intertight text-sm opacity-90 md:text-base underline decoration-[0.5px] underline-offset-4 hover:opacity-60 transition-opacity"
                     >
                       {project.label}
@@ -121,7 +121,7 @@ export function WorkSection() {
                           (project as typeof project & { link2: string }).link2
                         }
                         target="_blank"
-                        rel="noreferrer"
+                        rel="noopener noreferrer"
                         className="font-intertight text-sm opacity-90 md:text-base underline decoration-[0.5px] underline-offset-4 hover:opacity-60 transition-opacity"
                       >
                         {

@@ -129,6 +129,7 @@ export function ContactSection() {
               <div className="flex w-full max-w-md flex-col gap-6 text-left sm:text-right">
                 <Link
                   href="mailto:hello@amifukuyama.com"
+                  aria-label="Send an email to Ami Fukuyama"
                   className="font-unica text-2xl md:text-3xl tracking-tight text-white transition-all duration-200 hover:translate-x-2 hover:opacity-80"
                 >
                   Email
@@ -136,7 +137,8 @@ export function ContactSection() {
                 <Link
                   href="https://www.linkedin.com/in/amifukuyama/"
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
+                  aria-label="Ami Fukuyama on LinkedIn (opens in new tab)"
                   className="font-unica text-2xl md:text-3xl tracking-tight text-white transition-all duration-200 hover:translate-x-2 hover:opacity-80"
                 >
                   LinkedIn
@@ -144,7 +146,8 @@ export function ContactSection() {
                 <Link
                   href="https://github.com/Ami0480"
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
+                  aria-label="Ami Fukuyama on GitHub (opens in new tab)"
                   className="font-unica text-2xl md:text-3xl tracking-tight text-white transition-all duration-200 hover:translate-x-2 hover:opacity-80"
                 >
                   Github
@@ -152,7 +155,8 @@ export function ContactSection() {
                 <Link
                   href="https://x.com/CodeCrafty"
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
+                  aria-label="Ami Fukuyama on X / Twitter (opens in new tab)"
                   className="font-unica text-2xl md:text-3xl tracking-tight text-white transition-all duration-200 hover:translate-x-2 hover:opacity-80"
                 >
                   X
